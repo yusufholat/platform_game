@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @PlayerInputActions : IInputActionCollection, IDisposable {
+public class @PlayerInputActions : IInputActionCollection, IDisposable
+{
     public InputActionAsset asset { get; }
-    public @PlayerInputActions() {
+    public @PlayerInputActions()
+    {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerInputActions"",
     ""maps"": [
@@ -187,39 +189,47 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable {
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
     }
 
-    public void Dispose() {
+    public void Dispose()
+    {
         UnityEngine.Object.Destroy(asset);
     }
 
-    public InputBinding? bindingMask {
+    public InputBinding? bindingMask
+    {
         get => asset.bindingMask;
         set => asset.bindingMask = value;
     }
 
-    public ReadOnlyArray<InputDevice>? devices {
+    public ReadOnlyArray<InputDevice>? devices
+    {
         get => asset.devices;
         set => asset.devices = value;
     }
 
     public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
 
-    public bool Contains(InputAction action) {
+    public bool Contains(InputAction action)
+    {
         return asset.Contains(action);
     }
 
-    public IEnumerator<InputAction> GetEnumerator() {
+    public IEnumerator<InputAction> GetEnumerator()
+    {
         return asset.GetEnumerator();
     }
 
-    IEnumerator IEnumerable.GetEnumerator() {
+    IEnumerator IEnumerable.GetEnumerator()
+    {
         return GetEnumerator();
     }
 
-    public void Enable() {
+    public void Enable()
+    {
         asset.Enable();
     }
 
-    public void Disable() {
+    public void Disable()
+    {
         asset.Disable();
     }
 
@@ -229,7 +239,8 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable {
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Attack;
-    public struct PlayerActions {
+    public struct PlayerActions
+    {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
@@ -240,8 +251,10 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable {
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
         public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void SetCallbacks(IPlayerActions instance) {
-            if (m_Wrapper.m_PlayerActionsCallbackInterface != null) {
+        public void SetCallbacks(IPlayerActions instance)
+        {
+            if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
+            {
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
@@ -253,7 +266,8 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable {
                 @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
-            if (instance != null) {
+            if (instance != null)
+            {
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -268,20 +282,25 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable {
     }
     public PlayerActions @Player => new PlayerActions(this);
     private int m_KeyboardSchemeIndex = -1;
-    public InputControlScheme KeyboardScheme {
-        get {
+    public InputControlScheme KeyboardScheme
+    {
+        get
+        {
             if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
             return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
     private int m_GamePadSchemeIndex = -1;
-    public InputControlScheme GamePadScheme {
-        get {
+    public InputControlScheme GamePadScheme
+    {
+        get
+        {
             if (m_GamePadSchemeIndex == -1) m_GamePadSchemeIndex = asset.FindControlSchemeIndex("GamePad");
             return asset.controlSchemes[m_GamePadSchemeIndex];
         }
     }
-    public interface IPlayerActions {
+    public interface IPlayerActions
+    {
         void OnJump(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
