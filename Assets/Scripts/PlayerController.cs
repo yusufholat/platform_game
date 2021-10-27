@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Flip() {
+        dustEffect.Play();
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         faceRight = !faceRight;
@@ -92,16 +93,16 @@ public class PlayerController : MonoBehaviour {
         else if (context.canceled) { isHoldJumping = false; pressingJumpButton = false; }
 
         if (context.started && isTouchingWall()) {
-
+            dustEffect.Play();
             walljumping = true;
             rb.velocity = new Vector2(xWallForce * -movementHorizontal, yWallForce);
             Invoke("setWallJumpingToFalse", wallJumptime);
         } else if (context.started && extraJumps > 0 && !isGrounded() && !isTouchingWall()) {
-
+            dustEffect.Play();
             rb.velocity = Vector2.up * jumpForce;
             extraJumps--;
         } else if (context.started && isGrounded()) {
-
+            dustEffect.Play();
             rb.velocity = Vector2.up * jumpForce;
             isHoldJumping = true;
             jumpTimeCounter = jumpTime;
