@@ -29,9 +29,12 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] float wallSlidingSpeed;
     [SerializeField] ParticleSystem dustEffect;
 
+    private Animator anim;
+
     void Start() {
         extraJumps = extraJumpValue;
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate() {
@@ -89,8 +92,11 @@ public class PlayerController : MonoBehaviour {
 
     public void Jump(InputAction.CallbackContext context) {
 
-        if (context.started) pressingJumpButton = true;
-        else if (context.canceled) { isHoldJumping = false; pressingJumpButton = false; }
+        if (context.started) {
+            pressingJumpButton = true;
+            anim.SetTrigger("jumpTrigger");
+            anim.SetBool("isJumping", true);
+        } else if (context.canceled) { isHoldJumping = false; pressingJumpButton = false; anim.SetBool("isJumping", false); }
 
         if (context.started && isTouchingWall()) {
             dustEffect.Play();
@@ -114,6 +120,12 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void Move(InputAction.CallbackContext context) {
+        if (context.ReadValue<Vector2>().x != 0) {
+            anim.SetBool("isRunning", true);
+        } else {
+            anim.SetBool("isRunning", false);
+        }
+
         movementHorizontal = context.ReadValue<Vector2>().x;
     }
 
