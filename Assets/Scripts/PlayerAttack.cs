@@ -44,6 +44,6 @@ public class PlayerAttack : MonoBehaviour {
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(attackPos.position, attackRange);
+        //Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
 }
