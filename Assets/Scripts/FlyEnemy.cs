@@ -12,7 +12,6 @@ public class FlyEnemy : MonoBehaviour {
     private void Start() {
         player = GameObject.Find("Player");
         startingPoint = transform.position;
-        print(startingPoint);
     }
 
     private void Update() {
