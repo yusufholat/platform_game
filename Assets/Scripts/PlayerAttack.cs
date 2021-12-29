@@ -18,6 +18,11 @@ public class PlayerAttack : MonoBehaviour {
         playerInputAction.Player.Enable();
     }
 
+    void Start() {
+
+    }
+
+    // Update is called once per frame
     void Update() {
         if (timeBtwAttack <= 0) {
             Debug.Log(playerInputAction.Player.Attack.ReadValue<float>());
@@ -30,8 +35,9 @@ public class PlayerAttack : MonoBehaviour {
     }
 
     public void Attack(InputAction.CallbackContext context) {
-
+        Debug.Log("gird ");
         if (context.started && timeBtwAttack <= 0) {
+            Debug.Log("vurd");
 
         }
     }
