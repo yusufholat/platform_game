@@ -21,14 +21,14 @@ public class FlyEnemy : MonoBehaviour {
             Chase();
         else returnStartingPoint();
 
-        Flip();
+        FlipControl();
     }
 
     private void Chase() {
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
 
-    private void Flip() {
+    private void FlipControl() {
         if (transform.position.x > player.transform.position.x) {
             transform.rotation = Quaternion.Euler(0, 0, 0);
         } else {
@@ -36,10 +36,9 @@ public class FlyEnemy : MonoBehaviour {
         }
     }
 
-
     private void returnStartingPoint() {
-        transform.position = Vector2.MoveTowards(transform.position, startingPoint, speed * 0.75f * Time.deltaTime);
-        print(startingPoint);
+        transform.position =
+        Vector2.MoveTowards(transform.position, startingPoint, speed * 0.75f * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

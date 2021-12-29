@@ -40,15 +40,9 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate() {
         rb.velocity = new Vector2(movementHorizontal * movementSpeed, rb.velocity.y);
 
+        if (wallSliding) rb.velocity = new Vector2(rb.velocity.x, -wallSlidingSpeed);
 
-
-        if (wallSliding) {
-            rb.velocity = new Vector2(rb.velocity.x, -wallSlidingSpeed);
-        }
-
-        if (walljumping) {
-            rb.velocity = new Vector2(xWallForce * -movementHorizontal, yWallForce);
-        }
+        if (walljumping) rb.velocity = new Vector2(xWallForce * -movementHorizontal, yWallForce);
     }
 
     void Update() {
@@ -74,11 +68,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Flip() {
-        dustEffect.Play();
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         faceRight = !faceRight;
         transform.localScale = scaler;
+        dustEffect.Play();
     }
 
     bool isGrounded() {
@@ -92,26 +86,36 @@ public class PlayerController : MonoBehaviour {
 
     public void Jump(InputAction.CallbackContext context) {
 
+        //ilgili tusa basma eylemi
         if (context.started) {
             pressingJumpButton = true;
             anim.SetTrigger("jumpTrigger");
-            anim.SetBool("isJumping", true);
-        } else if (context.canceled) { isHoldJumping = false; pressingJumpButton = false; anim.SetBool("isJumping", false); }
+        }
+        //ilgili tusu birakma eylemi 
+        else if (context.canceled) {
+            isHoldJumping = false;
+            pressingJumpButton = false;
+        }
 
+        //duvardan ziplama
         if (context.started && isTouchingWall()) {
             dustEffect.Play();
             walljumping = true;
             rb.velocity = new Vector2(xWallForce * -movementHorizontal, yWallForce);
             Invoke("setWallJumpingToFalse", wallJumptime);
-        } else if (context.started && extraJumps > 0 && !isGrounded() && !isTouchingWall()) {
-            dustEffect.Play();
-            rb.velocity = Vector2.up * jumpForce;
-            extraJumps--;
-        } else if (context.started && isGrounded()) {
-            dustEffect.Play();
+        }
+        //normal ziplama 
+        else if (context.started && isGrounded()) {
             rb.velocity = Vector2.up * jumpForce;
             isHoldJumping = true;
             jumpTimeCounter = jumpTime;
+            dustEffect.Play();
+        }
+        //extra ziplama 
+        else if (context.started && extraJumps > 0 && !isGrounded() && !isTouchingWall()) {
+            rb.velocity = Vector2.up * jumpForce;
+            extraJumps--;
+            dustEffect.Play();
         }
     }
 
@@ -125,8 +129,6 @@ public class PlayerController : MonoBehaviour {
         } else {
             anim.SetBool("isRunning", false);
         }
-
         movementHorizontal = context.ReadValue<Vector2>().x;
     }
-
 }
