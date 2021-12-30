@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6858882978152124487}
   - component: {fileID: 6858882978152124486}
+  - component: {fileID: 6779663587922250099}
+  - component: {fileID: 2705892481901111456}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -82,6 +84,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &6779663587922250099
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858882978152124480}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.037900448, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.62317705
+--- !u!114 &2705892481901111456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858882978152124480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ea6b9090aadca468af2286d9ebffb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6858882979112645928
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  health: 50
 --- !u!61 &6858882979112645933
 BoxCollider2D:
   m_ObjectHideFlags: 0

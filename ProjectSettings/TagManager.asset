@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Spike
   - Enemy
+  - attackrange
   layers:
   - Default
   - TransparentFX
@@ -60,4 +61,7 @@ TagManager:
     locked: 0
   - name: near1
     uniqueID: 1460914103
+    locked: 0
+  - name: canvas
+    uniqueID: 3829015099
     locked: 0

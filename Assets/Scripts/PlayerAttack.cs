@@ -12,38 +12,42 @@ public class PlayerAttack : MonoBehaviour {
     [SerializeField] LayerMask whatIsEnemy;
     [SerializeField] float attackRange;
     PlayerInputActions playerInputAction;
+    [SerializeField] int damage;
+
+    private Animator anim;
 
     private void Awake() {
         playerInputAction = new PlayerInputActions();
         playerInputAction.Player.Enable();
+        anim = GetComponent<Animator>();
     }
 
-    void Start() {
-
-    }
-
-    // Update is called once per frame
     void Update() {
         if (timeBtwAttack <= 0) {
-            Debug.Log(playerInputAction.Player.Attack.ReadValue<float>());
             if (playerInputAction.Player.Attack.ReadValue<float>() > 0) {
                 timeBtwAttack = startTimeBtwAttack;
-                Instantiate(attackEffect, attackPos.position, Quaternion.identity);
             }
-
         } else timeBtwAttack -= Time.deltaTime;
     }
 
     public void Attack(InputAction.CallbackContext context) {
-        Debug.Log("gird ");
         if (context.started && timeBtwAttack <= 0) {
-            Debug.Log("vurd");
-
+            anim.SetTrigger("attackTrigger");
+            // Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemy);
+            // foreach (var enemy in enemies) {
+            //     enemy.GetComponent<IEnemy>().TakeDamage(damage);
+            // }
         }
     }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
-        //Gizmos.DrawWireSphere(attackPos.position, attackRange);
+        Gizmos.DrawWireSphere(attackPos.position, attackRange);
+    }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Enemy")) {
+            Debug.Log("dddddddd");
+            other.GetComponent<IEnemy>().TakeDamage(damage);
+        }
     }
 }

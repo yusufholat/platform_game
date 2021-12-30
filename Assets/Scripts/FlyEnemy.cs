@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyEnemy : MonoBehaviour {
+public class FlyEnemy : MonoBehaviour, IEnemy {
 
     [SerializeField] float speed;
     private GameObject player;
     private bool chase = false;
     private Vector3 startingPoint;
+    public int health = 50;
 
     private void Start() {
         player = GameObject.Find("Player");
@@ -40,7 +41,6 @@ public class FlyEnemy : MonoBehaviour {
 
     private void returnStartingPoint() {
         transform.position = Vector2.MoveTowards(transform.position, startingPoint, speed * 0.75f * Time.deltaTime);
-        print(startingPoint);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -53,5 +53,11 @@ public class FlyEnemy : MonoBehaviour {
         if (other.CompareTag("Player")) {
             chase = false;
         }
+    }
+
+    public void TakeDamage(int damage) {
+        Debug.Log("damage taken");
+        health -= damage;
+        if (health <= 0) Destroy(gameObject);
     }
 }
