@@ -11,10 +11,6 @@ public class LevelLoader : MonoBehaviour {
         animator = GetComponent<Animator>();
     }
 
-    void Update() {
-
-    }
-
     void restartScene(string sceneName) {
         LoadLevel(sceneName);
     }

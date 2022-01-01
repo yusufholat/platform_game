@@ -46,7 +46,6 @@ public class PlayerAttack : MonoBehaviour {
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Enemy")) {
-            Debug.Log("dddddddd");
             other.GetComponent<IEnemy>().TakeDamage(damage);
         }
     }

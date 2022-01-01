@@ -27,7 +27,6 @@ public class BasicEnemy : MonoBehaviour, IEnemy {
     }
 
     public void TakeDamage(int damage) {
-        Debug.Log("damage taken");
         health -= damage;
         if (health <= 0) Destroy(gameObject);
     }
